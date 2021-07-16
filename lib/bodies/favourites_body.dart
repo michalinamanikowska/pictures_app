@@ -55,7 +55,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
     });
   }
 
-  Widget buildContent(int index) {
+  Widget buildContent(BuildContext ctx, int index) {
     return Row(
       children: [
         ClipRRect(
@@ -67,6 +67,17 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               if (loadingProgress == null) return child;
               return CircularProgressIndicator();
             },
+            // errorBuilder: (BuildContext context, Object exception,
+            //     StackTrace? stackTrace) {
+            //   return CircularProgressIndicator();
+            //   ScaffoldMessenger.of(ctx).showSnackBar(
+            //     SnackBar(
+            //       content: Text(
+            //           'An error has occurred.\nCheck your internet connection.'),
+
+            //     ),
+            //   );
+            // },
           ),
         ),
         Expanded(
@@ -97,7 +108,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       child: CustomContainer(
-                        child: buildContent(index),
+                        child: buildContent(context, index),
                       ),
                       onTap: () => Navigator.push(
                           context,
