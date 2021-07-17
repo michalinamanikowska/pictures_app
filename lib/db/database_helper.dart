@@ -88,7 +88,6 @@ class DatabaseHelper {
     List<Map> result = await db.rawQuery("SELECT * FROM $_tableName");
     List<MyImage> images = [];
     result.forEach((result) {
-      print('TU JESTEM');
       var user = User(
         name: result[columnUserName],
         image: result[columnUserImage],

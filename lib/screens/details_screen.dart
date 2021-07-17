@@ -59,6 +59,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
               if (loadingProgress == null) return child;
               return CircularProgressIndicator();
             },
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace? stackTrace) {
+              return Container(
+                  margin: EdgeInsets.all(10.0),
+                  child: Text(
+                    'Couldn\'t load the picture',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 17),
+                  ));
+            },
           ),
           SizedBox(
             width: double.infinity,

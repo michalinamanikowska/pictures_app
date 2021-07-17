@@ -67,17 +67,15 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
               if (loadingProgress == null) return child;
               return CircularProgressIndicator();
             },
-            // errorBuilder: (BuildContext context, Object exception,
-            //     StackTrace? stackTrace) {
-            //   return CircularProgressIndicator();
-            //   ScaffoldMessenger.of(ctx).showSnackBar(
-            //     SnackBar(
-            //       content: Text(
-            //           'An error has occurred.\nCheck your internet connection.'),
-
-            //     ),
-            //   );
-            // },
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace? stackTrace) {
+              return Container(
+                  constraints: BoxConstraints(maxWidth: 80),
+                  child: Text(
+                    'Couldn\'t load the picture',
+                    textAlign: TextAlign.center,
+                  ));
+            },
           ),
         ),
         Expanded(

@@ -84,6 +84,14 @@ class UserView extends StatelessWidget {
                   if (loadingProgress == null) return child;
                   return CircularProgressIndicator();
                 },
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return Text(
+                    'Couldn\'t load the image',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11),
+                  );
+                },
               ),
             ),
           ),
