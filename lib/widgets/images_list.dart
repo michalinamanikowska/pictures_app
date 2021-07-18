@@ -26,6 +26,15 @@ class ImagesList extends StatelessWidget {
               if (loadingProgress == null) return child;
               return CircularProgressIndicator();
             },
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace? stackTrace) {
+              return Container(
+                  constraints: BoxConstraints(maxWidth: 80),
+                  child: Text(
+                    'Couldn\'t load the picture',
+                    textAlign: TextAlign.center,
+                  ));
+            },
           ),
         ),
         Expanded(

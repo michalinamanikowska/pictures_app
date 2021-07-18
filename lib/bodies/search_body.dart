@@ -73,12 +73,13 @@ class _SearchBodyState extends State<SearchBody> {
             else if (state is ImagesAreLoading)
               return Center(child: CircularProgressIndicator());
             else if (state is ImagesAreLoaded) {
-              SavedList.saveScreen(state.getData);
-              if (state.getData.isEmpty) {
+              final images = state.getData;
+              if (images.isEmpty) {
                 return Text('No pictures found.',
                     style: TextStyle(fontSize: 15));
               }
-              return Expanded(child: ImagesList(state.getData));
+              SavedList.saveScreen(images);
+              return Expanded(child: ImagesList(images));
             }
             return Text(
               'An error has occurred.\nCheck your internet connection.',
