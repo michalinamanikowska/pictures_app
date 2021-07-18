@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import '../bodies/search_body.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bodies/favourites_body.dart';
+import '../bodies/search_body.dart';
 import '../widgets/app_bar.dart';
+import '../bloc/images_bloc.dart';
+import '../repositories/images_repository.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -18,7 +21,12 @@ class _MainScreenState extends State<MainScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50), child: MyAppBar('Pictures App')),
       body: GestureDetector(
-          child: _selectedPageIndex == 0 ? SearchScreen() : FavouritesScreen(),
+          child: _selectedPageIndex == 0
+              ? BlocProvider(
+                  create: (context) => ImagesBloc(ImagesRepository()),
+                  child: SearchBody(),
+                )
+              : FavouritesBody(),
           onPanUpdate: (details) {
             if ((details.delta.dx < 0 && _selectedPageIndex == 0) ||
                 details.delta.dx > 0 && _selectedPageIndex == 1) {

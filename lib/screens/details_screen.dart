@@ -79,28 +79,30 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ),
           TitleStrap('AUTHOR'),
           UserView(widget.currentImage.user),
-          if (widget.currentImage.description.isNotEmpty)
+          if (widget.currentImage.description != null)
             TitleStrap('DESCRIPTION'),
-          if (widget.currentImage.description.isNotEmpty)
-            StyledText(widget.currentImage.description),
-          if (widget.currentImage.likes.isNotEmpty)
-            TitleStrap('NUMBER OF LIKES'),
-          if (widget.currentImage.likes.isNotEmpty)
-            StyledText(widget.currentImage.likes),
-          if (widget.currentImage.createdDate.isNotEmpty)
+          if (widget.currentImage.description != null)
+            StyledText(widget.currentImage.description.toString()),
+          if (widget.currentImage.likes != null) TitleStrap('NUMBER OF LIKES'),
+          if (widget.currentImage.likes != null)
+            StyledText(widget.currentImage.likes.toString()),
+          if (widget.currentImage.createdDate != null)
             TitleStrap('CREATED DATE'),
-          if (widget.currentImage.createdDate.isNotEmpty)
-            StyledText(widget.currentImage.createdDate.substring(0, 10)),
-          if (widget.currentImage.updatedDate.isNotEmpty)
-            TitleStrap('UPDATED DATE'),
-          if (widget.currentImage.updatedDate.isNotEmpty)
-            StyledText(widget.currentImage.updatedDate.substring(0, 10)),
-          if (widget.currentImage.width.isNotEmpty &&
-              widget.currentImage.height.isNotEmpty)
-            TitleStrap('ORIGINAL DIMENSIONS'),
-          if (widget.currentImage.createdDate.isNotEmpty)
+          if (widget.currentImage.createdDate != null)
             StyledText(
-                widget.currentImage.width + ' x ' + widget.currentImage.height),
+                widget.currentImage.createdDate.toString().substring(0, 10)),
+          if (widget.currentImage.updatedDate != null)
+            TitleStrap('UPDATED DATE'),
+          if (widget.currentImage.updatedDate != null)
+            StyledText(
+                widget.currentImage.updatedDate.toString().substring(0, 10)),
+          if (widget.currentImage.width != null &&
+              widget.currentImage.height != null)
+            TitleStrap('ORIGINAL DIMENSIONS'),
+          if (widget.currentImage.createdDate != null)
+            StyledText(widget.currentImage.width.toString() +
+                ' x ' +
+                widget.currentImage.height.toString()),
           SizedBox(
             height: 15,
           ),

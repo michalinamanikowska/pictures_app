@@ -26,7 +26,7 @@ class UserView extends StatelessWidget {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      if (user.instagram.isNotEmpty)
+                      if (user.instagram != null)
                         Row(
                           children: [
                             Icon(
@@ -35,7 +35,7 @@ class UserView extends StatelessWidget {
                             ),
                             SizedBox(width: 3),
                             Container(
-                              constraints: user.twitter.isNotEmpty
+                              constraints: user.twitter != null
                                   ? BoxConstraints(
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
@@ -44,11 +44,11 @@ class UserView extends StatelessWidget {
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
                                               0.6),
-                              child: Text(user.instagram),
+                              child: Text(user.instagram.toString()),
                             ),
                           ],
                         ),
-                      if (user.twitter.isNotEmpty)
+                      if (user.twitter != null)
                         Row(
                           children: [
                             Icon(
@@ -57,7 +57,7 @@ class UserView extends StatelessWidget {
                             ),
                             SizedBox(width: 3),
                             Container(
-                              constraints: user.instagram.isNotEmpty
+                              constraints: user.instagram != null
                                   ? BoxConstraints(
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
@@ -66,7 +66,7 @@ class UserView extends StatelessWidget {
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
                                               0.6),
-                              child: Text(user.twitter),
+                              child: Text(user.twitter.toString()),
                             ),
                           ],
                         )
@@ -79,7 +79,7 @@ class UserView extends StatelessWidget {
             radius: 30,
             child: ClipOval(
               child: Image.network(
-                user.image,
+                user.image.toString(),
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return CircularProgressIndicator();

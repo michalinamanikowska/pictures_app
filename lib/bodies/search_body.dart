@@ -1,67 +1,20 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/images_list.dart';
-import '../models/globals.dart';
-import 'package:http/http.dart' as http;
+import '../models/saved_list.dart';
+import '../bloc/images_bloc.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchBody extends StatefulWidget {
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _SearchBodyState createState() => _SearchBodyState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchBodyState extends State<SearchBody> {
   final TextEditingController _controller = TextEditingController();
-  String searchValue = '';
-  bool isLoading = false;
-  List downloadedData = [];
 
-  Future<void> getData(ctx) async {
-    searchValue = _controller.text;
+  void loadData(ImagesBloc imagesBloc) {
     FocusScope.of(context).unfocus();
-    setState(() {
-      isLoading = true;
-    });
-    final url = Uri.parse(
-        'https://api.unsplash.com/search/photos?per_page=30&query=$searchValue&client_id=djkF0imZLQieLADtwAEz1_7xeOXFFv5P5appQEHgvkQ');
-    try {
-      var response = await http.get(url);
-      var data = json.decode(response.body);
-      setState(() {
-        downloadedData = data['results'];
-        isLoading = false;
-        if (downloadedData.isEmpty) {
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(
-              content: Text('No pictures found.'),
-            ),
-          );
-        }
-        Globals.saveScreen(downloadedData, _controller.text);
-      });
-    } catch (error) {
-      ScaffoldMessenger.of(ctx).showSnackBar(
-        SnackBar(
-          content:
-              Text('An error has occurred.\nCheck your internet connection.'),
-          action: SnackBarAction(
-            label: "Ok",
-            onPressed: () => setState(() {
-              isLoading = false;
-            }),
-          ),
-        ),
-      );
-    }
-  }
-
-  @override
-  void initState() {
-    if (Globals.inputText != null) {
-      _controller.text = Globals.inputText;
-      downloadedData = Globals.downloadedData;
-    }
-    super.initState();
+    imagesBloc.add(FetchImages(_controller.text));
   }
 
   @override
@@ -70,7 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  Widget buildButton() {
+  Widget buildButton(ImagesBloc imagesBloc) {
     return ElevatedButton(
       style: ButtonStyle(
           backgroundColor:
@@ -79,7 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
               RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ))),
-      onPressed: () => getData(context),
+      onPressed: () => loadData(imagesBloc),
       child: Text(
         'Submit',
         style: TextStyle(
@@ -92,6 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final imagesBloc = BlocProvider.of<ImagesBloc>(context);
     return Column(
       children: [
         Padding(
@@ -104,17 +58,35 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: TextStyle(fontSize: 17),
                   controller: _controller,
                   textInputAction: TextInputAction.search,
-                  onEditingComplete: () => getData(context),
+                  onEditingComplete: () => loadData(imagesBloc),
                 ),
               ),
               SizedBox(width: 10),
-              buildButton(),
+              buildButton(imagesBloc),
             ],
           ),
         ),
-        isLoading
-            ? Center(child: CircularProgressIndicator())
-            : Expanded(child: ImagesList(downloadedData)),
+        BlocBuilder<ImagesBloc, ImagesState>(
+          builder: (context, state) {
+            if (state is ImagesAreNotSearched)
+              return Expanded(child: ImagesList(SavedList.downloadedData));
+            else if (state is ImagesAreLoading)
+              return Center(child: CircularProgressIndicator());
+            else if (state is ImagesAreLoaded) {
+              SavedList.saveScreen(state.getData);
+              if (state.getData.isEmpty) {
+                return Text('No pictures found.',
+                    style: TextStyle(fontSize: 15));
+              }
+              return Expanded(child: ImagesList(state.getData));
+            }
+            return Text(
+              'An error has occurred.\nCheck your internet connection.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 15),
+            );
+          },
+        ),
       ],
     );
   }

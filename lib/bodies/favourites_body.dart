@@ -3,14 +3,13 @@ import '../widgets/custom_container.dart';
 import '../screens/details_screen.dart';
 import '../db/database_helper.dart';
 
-class FavouritesScreen extends StatefulWidget {
+class FavouritesBody extends StatefulWidget {
   @override
-  _FavouritesScreenState createState() => _FavouritesScreenState();
+  _FavouritesBodyState createState() => _FavouritesBodyState();
 }
 
-class _FavouritesScreenState extends State<FavouritesScreen> {
+class _FavouritesBodyState extends State<FavouritesBody> {
   final dbHelper = DatabaseHelper.instance;
-
   List favouriteImages = [];
 
   Future<bool> loadImages() async {
