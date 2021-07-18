@@ -4,8 +4,8 @@ import '../models/user.dart';
 import 'package:mdi/mdi.dart';
 
 class UserView extends StatelessWidget {
-  final User user;
-  UserView(this.user);
+  final User _user;
+  UserView(this._user);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class UserView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                   child: Text(
-                    user.name,
+                    _user.name,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
@@ -26,7 +26,7 @@ class UserView extends StatelessWidget {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      if (user.instagram != null)
+                      if (_user.instagram != null)
                         Row(
                           children: [
                             Icon(
@@ -35,7 +35,7 @@ class UserView extends StatelessWidget {
                             ),
                             SizedBox(width: 3),
                             Container(
-                              constraints: user.twitter != null
+                              constraints: _user.twitter != null
                                   ? BoxConstraints(
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
@@ -44,11 +44,11 @@ class UserView extends StatelessWidget {
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
                                               0.6),
-                              child: Text(user.instagram.toString()),
+                              child: Text(_user.instagram.toString()),
                             ),
                           ],
                         ),
-                      if (user.twitter != null)
+                      if (_user.twitter != null)
                         Row(
                           children: [
                             Icon(
@@ -57,7 +57,7 @@ class UserView extends StatelessWidget {
                             ),
                             SizedBox(width: 3),
                             Container(
-                              constraints: user.instagram != null
+                              constraints: _user.instagram != null
                                   ? BoxConstraints(
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
@@ -66,7 +66,7 @@ class UserView extends StatelessWidget {
                                       maxWidth:
                                           MediaQuery.of(context).size.width *
                                               0.6),
-                              child: Text(user.twitter.toString()),
+                              child: Text(_user.twitter.toString()),
                             ),
                           ],
                         )
@@ -79,7 +79,7 @@ class UserView extends StatelessWidget {
             radius: 30,
             child: ClipOval(
               child: Image.network(
-                user.image.toString(),
+                _user.image.toString(),
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return CircularProgressIndicator();

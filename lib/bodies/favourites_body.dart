@@ -10,10 +10,10 @@ class FavouritesBody extends StatefulWidget {
 
 class _FavouritesBodyState extends State<FavouritesBody> {
   final dbHelper = DatabaseHelper.instance;
-  List favouriteImages = [];
+  List _favouriteImages = [];
 
   Future<bool> loadImages() async {
-    favouriteImages = await dbHelper.getImages();
+    _favouriteImages = await dbHelper.getImages();
     return true;
   }
 
@@ -42,15 +42,15 @@ class _FavouritesBodyState extends State<FavouritesBody> {
   }
 
   void deleteImage(ctx, index) {
-    dbHelper.delete(favouriteImages[index].id);
+    dbHelper.delete(_favouriteImages[index].id);
     ScaffoldMessenger.of(ctx).showSnackBar(
       SnackBar(
         content: Text(
-            'Picture ${favouriteImages[index].title} removed from favorites.'),
+            'Picture ${_favouriteImages[index].title} removed from favorites.'),
       ),
     );
     setState(() {
-      favouriteImages.removeAt(index);
+      _favouriteImages.removeAt(index);
     });
   }
 
@@ -60,7 +60,7 @@ class _FavouritesBodyState extends State<FavouritesBody> {
         ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Image.network(
-            favouriteImages[index].urlSmall,
+            _favouriteImages[index].urlSmall,
             width: 120,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
@@ -80,7 +80,7 @@ class _FavouritesBodyState extends State<FavouritesBody> {
         Expanded(
           child: Center(
             child: Text(
-              favouriteImages[index].title,
+              _favouriteImages[index].title,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -99,9 +99,9 @@ class _FavouritesBodyState extends State<FavouritesBody> {
       future: loadImages(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return favouriteImages.length != 0
+          return _favouriteImages.length != 0
               ? ListView.builder(
-                  itemCount: favouriteImages.length,
+                  itemCount: _favouriteImages.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       child: CustomContainer(
@@ -111,7 +111,7 @@ class _FavouritesBodyState extends State<FavouritesBody> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  DetailsScreen(favouriteImages[index]),
+                                  DetailsScreen(_favouriteImages[index]),
                               settings: RouteSettings(arguments: false))),
                     );
                   },

@@ -5,8 +5,8 @@ import '../models/my_image.dart';
 import '../db/database_helper.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final MyImage currentImage;
-  DetailsScreen(this.currentImage);
+  final MyImage _currentImage;
+  DetailsScreen(this._currentImage);
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
@@ -17,7 +17,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   bool favourite = false;
 
   void undo() {
-    dbHelper.delete(widget.currentImage.id);
+    dbHelper.delete(widget._currentImage.id);
     setState(() {
       favourite = false;
     });
@@ -25,7 +25,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   void addToFavourites(ctx) {
     if (!favourite) {
-      dbHelper.insert(widget.currentImage);
+      dbHelper.insert(widget._currentImage);
       setState(() {
         favourite = true;
       });
@@ -42,7 +42,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   Future<bool> getData() async {
-    final result = await dbHelper.checkIfExists(widget.currentImage);
+    final result = await dbHelper.checkIfExists(widget._currentImage);
     setState(() {
       favourite = result;
     });
@@ -54,7 +54,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       child: Column(
         children: [
           Image.network(
-            widget.currentImage.urlRegular,
+            widget._currentImage.urlRegular,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
               return CircularProgressIndicator();
@@ -78,31 +78,31 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           ),
           TitleStrap('AUTHOR'),
-          UserView(widget.currentImage.user),
-          if (widget.currentImage.description != null)
+          UserView(widget._currentImage.user),
+          if (widget._currentImage.description != null)
             TitleStrap('DESCRIPTION'),
-          if (widget.currentImage.description != null)
-            StyledText(widget.currentImage.description.toString()),
-          if (widget.currentImage.likes != null) TitleStrap('NUMBER OF LIKES'),
-          if (widget.currentImage.likes != null)
-            StyledText(widget.currentImage.likes.toString()),
-          if (widget.currentImage.createdDate != null)
+          if (widget._currentImage.description != null)
+            StyledText(widget._currentImage.description.toString()),
+          if (widget._currentImage.likes != null) TitleStrap('NUMBER OF LIKES'),
+          if (widget._currentImage.likes != null)
+            StyledText(widget._currentImage.likes.toString()),
+          if (widget._currentImage.createdDate != null)
             TitleStrap('CREATED DATE'),
-          if (widget.currentImage.createdDate != null)
+          if (widget._currentImage.createdDate != null)
             StyledText(
-                widget.currentImage.createdDate.toString().substring(0, 10)),
-          if (widget.currentImage.updatedDate != null)
+                widget._currentImage.createdDate.toString().substring(0, 10)),
+          if (widget._currentImage.updatedDate != null)
             TitleStrap('UPDATED DATE'),
-          if (widget.currentImage.updatedDate != null)
+          if (widget._currentImage.updatedDate != null)
             StyledText(
-                widget.currentImage.updatedDate.toString().substring(0, 10)),
-          if (widget.currentImage.width != null &&
-              widget.currentImage.height != null)
+                widget._currentImage.updatedDate.toString().substring(0, 10)),
+          if (widget._currentImage.width != null &&
+              widget._currentImage.height != null)
             TitleStrap('ORIGINAL DIMENSIONS'),
-          if (widget.currentImage.createdDate != null)
-            StyledText(widget.currentImage.width.toString() +
+          if (widget._currentImage.createdDate != null)
+            StyledText(widget._currentImage.width.toString() +
                 ' x ' +
-                widget.currentImage.height.toString()),
+                widget._currentImage.height.toString()),
           SizedBox(
             height: 15,
           ),
@@ -119,7 +119,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
-          child: MyAppBar(widget.currentImage.title)),
+          child: MyAppBar(widget._currentImage.title)),
       body: FutureBuilder(
         future: getData(),
         builder: (context, snapshot) {
