@@ -78,10 +78,14 @@ class _FavouritesBodyState extends State<FavouritesBody> {
           ),
         ),
         Expanded(
-          child: Center(
-            child: Text(
-              _favouriteImages[index].title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          child: Container(
+            margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+            child: Center(
+              child: Text(
+                _favouriteImages[index].title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
