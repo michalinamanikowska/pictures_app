@@ -26,32 +26,4 @@ class MyImage {
     this.likes,
     required this.user,
   });
-
-  factory MyImage.fromJson(Map<String, dynamic> json, String searchValue) {
-    final user = User(
-      name: json['user']['name'],
-      image: json['user']['profile_image']['large'],
-      instagram: json['user']['instagram_username'],
-      twitter: json['user']['twitter_username'],
-    );
-
-    final image = MyImage(
-      id: json['id'],
-      title: json['description'] != null &&
-              ' '.allMatches(json['description']).length < 5
-          ? json['description']
-          : searchValue,
-      urlSmall: json['urls']['small'],
-      urlRegular: json['urls']['small'],
-      description: json['description'],
-      createdDate: json['created_at'],
-      updatedDate: json['updated_at'],
-      width: json['width'],
-      height: json['height'],
-      likes: json['likes'],
-      user: user,
-    );
-
-    return image;
-  }
 }
