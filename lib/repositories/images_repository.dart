@@ -19,7 +19,7 @@ class ImagesRepository {
           ? json['description']
           : searchValue,
       urlSmall: json['urls']['small'],
-      urlRegular: json['urls']['small'],
+      urlRegular: json['urls']['regular'],
       description: json['description'],
       createdDate: json['created_at'],
       updatedDate: json['updated_at'],

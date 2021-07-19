@@ -57,7 +57,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
             widget._currentImage.urlRegular,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
-              return CircularProgressIndicator();
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              );
             },
             errorBuilder: (BuildContext context, Object exception,
                 StackTrace? stackTrace) {
