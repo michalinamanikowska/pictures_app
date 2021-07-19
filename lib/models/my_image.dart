@@ -27,7 +27,7 @@ class MyImage {
     required this.user,
   });
 
-  factory MyImage.fromJson(Map<String, dynamic> json) {
+  factory MyImage.fromJson(Map<String, dynamic> json, String searchValue) {
     final user = User(
       name: json['user']['name'],
       image: json['user']['profile_image']['large'],
@@ -37,7 +37,10 @@ class MyImage {
 
     final image = MyImage(
       id: json['id'],
-      title: json['id'],
+      title: json['description'] != null &&
+              ' '.allMatches(json['description']).length < 5
+          ? json['description']
+          : searchValue,
       urlSmall: json['urls']['small'],
       urlRegular: json['urls']['small'],
       description: json['description'],

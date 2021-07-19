@@ -12,7 +12,7 @@ class ImagesRepository {
     List downloadedData = [];
     data['results'].forEach(
       (element) {
-        final image = MyImage.fromJson(element);
+        final image = MyImage.fromJson(element, searchValue);
         downloadedData.add(image);
       },
     );

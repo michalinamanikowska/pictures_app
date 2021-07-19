@@ -42,7 +42,7 @@ class ImagesList extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
             child: Center(
               child: Text(
-                _images[index].id,
+                _images[index].title,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
